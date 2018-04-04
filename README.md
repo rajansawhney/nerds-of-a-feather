@@ -1,1 +1,1 @@
-Nerds of feather - code together
+Nerds of a feather - code together
