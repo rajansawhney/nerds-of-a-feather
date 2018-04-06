@@ -1,0 +1,23 @@
+{
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.4",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "webpack": "^4.5.0",
+    "webpack-cli": "^2.0.14"
+  },
+  "scripts": {
+    "start:webpack": "NODE_ENV=local webpack-dev-server --colors --progress --hot --open --config webpack.config.js --mode development",
+    "start": "yarn run clean && yarn run start:webpack",
+    "clean": "rm -rf ./dist"
+  },
+  "dependencies": {
+    "babel-preset-stage-2": "^6.24.1",
+    "html-webpack-plugin": "^3.2.0",
+    "path": "^0.12.7",
+    "react": "^16.3.1",
+    "react-dom": "^16.3.1",
+    "webpack-dev-server": "^3.1.1"
+  }
+}
