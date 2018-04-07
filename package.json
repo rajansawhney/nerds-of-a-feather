@@ -1,5 +1,5 @@
 {
-"name": "egan-warming-client",
+"name": "ecan",
   "version": "1.0.0",
   "description": "Front End for EGAN Warming Center H4C 2018",
   "main": "index.js",
@@ -28,5 +28,4 @@
     "webpack-cli": "^2.0.14",
     "webpack-dev-server": "^3.1.1"
   }
-
 }
