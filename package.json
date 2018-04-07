@@ -1,9 +1,5 @@
 {
-<<<<<<< HEAD
-"name": "ecan",
-=======
   "name": "emerald-compassionate-action-network-client",
->>>>>>> 5e1c40885f307c084237e97de3be76405403f757
   "version": "1.0.0",
   "description": "Front End for ECAN H4C 2018",
   "main": "index.js",
