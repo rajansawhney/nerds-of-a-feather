@@ -1,33 +1,35 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const EventModel = mongoose.model('EventModel')
+const RequestError = require('../lib/Errors');
 
 module.exports = () => {
     createOrUpdate : (req,res) => {
-        if(!req.params.project_id){
-            ProjectModel.save(req.body)
-                .then(newProjectDocument => res.status(200).send(newProjectDocument))
+        if(!req.params.event_id){
+            EventModel.save(req.body)
+                .then(newEventDocument => res.status(200).send(newEventDocument))
                 .catch(error => {
                     console.log(error);
                     res.status(error.status || 500).send(error);
                 });
         }
         else {
-            ProjectModel.findOne({_id: req.params.project_id})
-                .then(foundProjectDocument => {
-                    if(foundProjectDocument == null){
-                        res.status(401).send(err)
+            EventModel.findOne({_id: req.params.event_id})
+                .then(foundEventDocument => {
+                    if(foundEventDocument == null){
+                        throw new RequestError(`Event ${req.params.event_id} not found`, 'NOT_FOUND');
                     }
-                    const updateProjectDocument = foundProjectDocument;
+
+                    const updateEventDocument = foundEventDocument;
                     _.forEach(req.body, (value, key) => {
-                        updateProjectDocument[key] = value;
+                        updateEventDocument[key] = value;
                     });
 
-                        updateProjectDocument[key] = value;
-                        return ProjectModel.update({ _id: ObjectId(req.params.project_id) }, updatedRecord)
+                        updateEventDocument[key] = value;
+                        return EventModel.update({ _id: ObjectId(req.params.event_id) }, updateEventDocument)
                         .then(result => {
                             res.status(200).send(result);
-                        })
+                        });
                 })
                 .catch(error => {
                     console.log(error);
@@ -37,8 +39,8 @@ module.exports = () => {
     };
 
     getAll: (req,res) => {
-        ProjectModel.find()
-            .then(projectDocuments => res.status(200).send(projectDocuments))
+        EventModel.find()
+            .then(eventDocuments => res.status(200).send(eventDocuments))
             .catch(error => {
                 console.log(error);
                 res.status(error.status || 500).send(error);
@@ -46,20 +48,20 @@ module.exports = () => {
     };
 
     getByID: (req,res) => {
-        ProjectModel.findOne({ _id: ObjectId(req.params.project_id) })
-        .then(projectDocument => res.status(200).send(projectDocument))
+        EventModel.findOne({ _id: ObjectId(req.params.event_id) })
+        .then(eventDocument => res.status(200).send(eventDocument))
         .catch(error => {
             console.log(error);
             res.status(error.status || 500).send(error);
         })
     };
 
-    deleteProject: (req, res, next) => {
-        ProjectModel.remove({ _id: ObjectId(req.params.project_id) })
+    deleteEvent: (req, res, next) => {
+        EventModel.remove({ _id: ObjectId(req.params.event_id) })
             .then(res.status(204).send({'msg': 'deleted'}))
             .catch(error => {
                 console.log(error);
-                return res.status(error.status || 500).send(error);
+                res.status(error.status || 500).send(error);
             });
     };
 }

@@ -1,5 +1,5 @@
-const mongoose = require('mongoose'),
-    OrganizationModel = mongoose.model('OrganizationModel');
+const mongoose = require('mongoose');
+const OrganizationModel = mongoose.model('OrganizationModel');
 const RequestError = require('../lib/Errors');
 
 module.exports = function () {
@@ -26,7 +26,14 @@ module.exports = function () {
     };
 
     createOrUpdate: (req, res, next) => {
-        if (req.params.organization_id) {
+        if (!req.params.organization_id) {
+            return OrganizationModel.save(req.body)
+            .then(savedRecord => res.status(201).send(savedRecord))
+            .catch(error => {
+                console.log(error);
+                res.status(error.status || 500).send(error);
+            });
+        } else {
             console.log(`Updating organization: ${req.params.organization_id}`);
 
             return OrganizationModel.findOne({ _id: ObjectId(req.params.organization_id) })
@@ -41,28 +48,13 @@ module.exports = function () {
                     });
 
                     return OrganizationModel.update({ _id: ObjectId(req.params.organization_id) }, updatedRecord)
-                        .then(result => {
-                            res.status(200).send(result);
-                        })
-                        .catch(error => {
-                            console.log(error);
-                            res.status(error.status || 500).send(error);
-                        });
+                        .then(result => res.status(200).send(result));
                 })
                 .catch(error => {
                     console.log(error);
                     res.status(error.status || 500).send(error);
                 });
         }
-        
-        return OrganizationModel.save(req.body)
-            .then(savedRecord => {
-                res.status(201).send(savedRecord);
-            })
-            .catch(error => {
-                console.log(error);
-                res.status(error.status || 500).send(error);
-            });
     };
 
     deleteOrganization: (req, res, next) => {

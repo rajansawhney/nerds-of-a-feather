@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const ProjectModel = mongoose.model('ProjectModel')
+const ProjectModel = mongoose.model('ProjectModel');
+const RequestError = require('../lib/Errors');
 
 module.exports = () => {
     createOrUpdate : (req,res) => {
@@ -16,7 +17,7 @@ module.exports = () => {
             ProjectModel.findOne({_id: req.params.project_id})
                 .then(foundProjectDocument => {
                     if(foundProjectDocument == null){
-                        res.status(401).send(err)
+                        throw new RequestError(`Project ${req.params.project_id} not found`, 'NOT_FOUND');
                     }
                     const updateProjectDocument = foundProjectDocument;
                     _.forEach(req.body, (value, key) => {
