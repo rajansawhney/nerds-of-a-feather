@@ -12,14 +12,21 @@ const dummyAPIData = {
 };
 
 const mapStateToProps = (state) => ({
-    events: _.get(state, 'events', {})
+    events: _.get(state, 'events', {}),
+    animationVal: _.get(state, 'events.animationVal', null),
+    numEventsFinished: _.get(state, 'events.numFinishedEvents', null)
 });
 
 class ProjectFeed extends Component {
     componentWillMount() {
-        this.props.setEventsFinished(dummyAPIData.eventsFinished)
+        this.props.setEventsFinished(dummyAPIData.eventsFinished);
     }
+    componentDidMount() {
+        setInterval(this.props.incrementEventsFinished, 250);
+    }
+
     render() {
+        console.log({ animation: this.props.animationVal, events: this.props.numEventsFinished })
         return (
             <div className="container">
                 <h2 className="m-4">Projects You Follow</h2>
@@ -30,7 +37,7 @@ class ProjectFeed extends Component {
                     link={<Link className="btn btn-primary" to="/feed">More Details</Link>}
                 >
                     {dummyAPIData.eventsFinished && (
-                        <p id="events-finished-text">{}</p>
+                        <p id="events-finished-text">{this.props.events.animationVal}/{this.props.numEventsFinished}</p>
                     )}
                     <p>Come out so this event, It's going to be the best!</p>
                 </ProjectCard>
