@@ -14,7 +14,7 @@ const dummyAPIData = {
 const mapStateToProps = (state) => ({
     events: _.get(state, 'events', {}),
     animationVal: _.get(state, 'events.animationVal', null),
-    numEventsFinished: _.get(state, 'events.numFinishedEvents', null)
+    numFinishedEvents: _.get(state, 'events.numFinishedEvents', null)
 });
 
 class ProjectFeed extends Component {
@@ -22,11 +22,11 @@ class ProjectFeed extends Component {
         this.props.setEventsFinished(dummyAPIData.eventsFinished);
     }
     componentDidMount() {
-        setInterval(this.props.incrementEventsFinished, 250);
+        setInterval(_.throttle(this.props.incrementEventsFinished, 60), 250);
     }
 
     render() {
-        console.log({ animation: this.props.animationVal, events: this.props.numEventsFinished })
+        console.log({ animation: this.props.animationVal, events: this.props.numFinishedEvents })
         return (
             <div className="container">
                 <h2 className="m-4">Projects You Follow</h2>
@@ -37,8 +37,13 @@ class ProjectFeed extends Component {
                     link={<Link className="btn btn-primary" to="/feed">More Details</Link>}
                 >
                     {dummyAPIData.eventsFinished && (
-                        <p id="events-finished-text">{this.props.events.animationVal}/{this.props.numEventsFinished}</p>
+                        <p id="events-finished-text">{this.props.events.animationVal}/{this.props.numFinishedEvents}</p>
                     )}
+                    <div className="container">
+                        <div className="progress">
+                            <div className="progress-bar progress-bar-striped bg-success" role="progressbar" style={{ width: `${(this.props.events.animationVal/this.props.numFinishedEvents)*100}%` }} aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" />
+                        </div>
+                    </div>
                     <p>Come out so this event, It's going to be the best!</p>
                 </ProjectCard>
 
