@@ -7,15 +7,45 @@ import {
 } from '../types';
 
 const initialState = {
-    events: { animationVal: 0 },
+    events: [
+        { 
+            id: 'tuv789',
+            name: 'After School Food Drive',
+            date: 1523732368,
+            description: 'Meet after school to donate your canned food!',
+            project: 'Fall Food Initiative',
+            location: 'University of Oregon',
+            owner: 'FOOD for Lane County', // organization
+            tags: ['food', 'homeless', 'fall']
+        },
+        { 
+            id: 'xyz910',
+            name: 'Saturday Market Ice Breaker Meeting',
+            date: 1525132368,
+            description: 'Our first meeting of the Winter Warmth Project!',
+            project: 'Winter Warmth Project',
+            location: 'Saturday Market',
+            owner: 'White Bird Clinic', // organization
+            tags: ['clothing', 'homeless', 'winter']
+        }
+    ],
     projects: [
         {
             id: 'abcd123',
-            title: 'Some Project Name',
-            startDate: 1522924450,
+            title: 'Winter Warmth Project',
+            startDate: '2018-04-01',
             numFinishedEvents: 12,
             totalEvents: 30,
-            description: "Come out so this event, It's going to be the best!",
+            description: "Keep our friends without addresses warm this winter!",
+            animationVal: 0
+        },
+        {
+            id: 'efg456',
+            title: 'Fall Food Initiative',
+            startDate: '2018-03-28',
+            numFinishedEvents: 4,
+            totalEvents: 22,
+            description: "Spread the love (and food) around town!",
             animationVal: 0
         }
     ]
