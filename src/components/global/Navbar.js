@@ -7,10 +7,10 @@ class Navbar extends Component {
     render() {
         return (
             <nav>
-                <Link to="/feed">Feed</Link>
-                <Link to="/projects" />
-                <Link to="/organizations">Organizations</Link>
-                <Link to="/profile" />
+                <Link to="/">Projects</Link>
+                <Link to="/events">Events</Link>
+                <Link to="/explore">Explore</Link>
+                <Link to="/profile" >Profile</Link>
             </nav>
         )
     }
