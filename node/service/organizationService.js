@@ -65,11 +65,9 @@ module.exports = function () {
             });
     };
 
-    deleteOrg: (req, res, next) => {
+    deleteOrganization: (req, res, next) => {
         OrganizationModel.delete({ _id: ObjectId(req.params.organization_id) })
-            .then(deletionResult => {
-                return res.status(204).send(deletionResult);
-            })
+            .then(res.status(204).send({'msg': 'deleted'}))
             .catch(error => {
                 console.log(error);
                 return res.status(error.status || 500).send(error);

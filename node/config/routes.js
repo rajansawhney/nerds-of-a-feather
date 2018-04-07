@@ -1,6 +1,6 @@
 const _ = require('lodash');
 const api = {
-    prefix: 'http://soar.ecan.com/soar'
+    prefix: 'http://soar.ecan.com/soar',
     version: 'v1'
 };
 

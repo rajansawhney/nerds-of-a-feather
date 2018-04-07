@@ -6,7 +6,7 @@
   "repository": "git@github.com:rajansawhney/nerds-of-a-feather.git",
   "author": "CBT Development",
   "license": "MIT",
-  "private": null,
+  "private": false,
   "scripts": {
     "start": "node app.js"
   },

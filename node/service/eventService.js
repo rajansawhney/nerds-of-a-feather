@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const ProjectModel = mongoose.model('ProjectModel')
+const EventModel = mongoose.model('EventModel')
 
 module.exports = () => {
     createOrUpdate : (req,res) => {
