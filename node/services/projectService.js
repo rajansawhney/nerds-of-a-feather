@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
 const ProjectModel = mongoose.model('ProjectModel')
 
 module.exports = () => {

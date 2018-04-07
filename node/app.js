@@ -21,8 +21,9 @@ mongoose.connect('mongodb://localhost/ECANdb')
     })
 
 
+
 // pass routes from here?
-const routes = require('../routes/organization');
+const routes = require('../routes/organizationRoute');
 // const routes = require('../routes/project');
 // const routes = require('../routes/organization');
                 
