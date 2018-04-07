@@ -2,13 +2,25 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import _ from 'lodash';
+import moment from 'moment';
 
 import { incrementEventsFinished, setEventsFinished } from '../../state/actions/index';
 
 import ProjectCard from '../ProjectCard';
 
 const dummyAPIData = {
-    eventsFinished: 12
+    project: [
+        {
+            id: 'abcd123',
+            title: 'Some Project Name',
+            startDate: `${moment().diff(moment(1522924450), 'days')} days ago`,
+            link:  <Link className="btn btn-primary" to="/projects/abcd123"> More Details</Link>,
+            numFinishedEvents: 12,
+            totalEvents: 30,
+            description: "Come out so this event, It's going to be the best!"
+        }
+    ],
+    eventsFinished: 20
 };
 
 const mapStateToProps = (state) => ({
@@ -21,12 +33,12 @@ class ProjectFeed extends Component {
     componentWillMount() {
         this.props.setEventsFinished(dummyAPIData.eventsFinished);
     }
+
     componentDidMount() {
-        setInterval(_.throttle(this.props.incrementEventsFinished, 60), 250);
+        setInterval(_.throttle(this.props.incrementEventsFinished, 10), 250);
     }
 
     render() {
-        console.log({ animation: this.props.animationVal, events: this.props.numFinishedEvents })
         return (
             <div className="container">
                 <h2 className="m-4">Projects You Follow</h2>
@@ -36,13 +48,17 @@ class ProjectFeed extends Component {
                     startDate="2 Days Ago"
                     link={<Link className="btn btn-primary" to="/feed">More Details</Link>}
                 >
-                    {dummyAPIData.eventsFinished && (
-                        <p id="events-finished-text">{this.props.events.animationVal}/{this.props.numFinishedEvents}</p>
-                    )}
-                    <div className="container">
-                        <div className="progress">
-                            <div className="progress-bar progress-bar-striped bg-success" role="progressbar" style={{ width: `${(this.props.events.animationVal/this.props.numFinishedEvents)*100}%` }} aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" />
+                    <div className="row justify-content-end align-items-center">
+                        <div className="col-3">
+                            <div className="progress">
+                                <div className="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" style={{ width: `${(this.props.events.animationVal/dummyAPIData.project[0].totalEvents)*100}%` }} aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" />
+                            </div>
                         </div>
+                        {dummyAPIData.eventsFinished && (
+                            <div className="col-1">
+                                <p className="m-0">{this.props.events.animationVal}/{dummyAPIData.project[0].totalEvents}</p>
+                            </div>
+                        )}
                     </div>
                     <p>Come out so this event, It's going to be the best!</p>
                 </ProjectCard>
