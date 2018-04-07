@@ -47,8 +47,18 @@ const initialState = {
             totalEvents: 22,
             description: "Spread the love (and food) around town!",
             animationVal: 0
+        },
+        {
+            id: 'gibberish',
+            title: 'Another Project Name',
+            startDate: 1522924450,
+            numFinishedEvents: 50,
+            totalEvents: 50,
+            description: "This Description Differs from the first",
+            animationVal: 0
         }
-    ]
+    ],
+    projectView: {}
 };
 
 const reducer = (state = initialState, action) => {
@@ -56,11 +66,16 @@ const reducer = (state = initialState, action) => {
 
     switch(type) {
         case SET_EVENTS_FINISHED: {
-            return _.assign(...state, { events: { ...state.events, numFinishedEvents: payload } })
+            return _.assign(...state, { ...state, events: { ...state.events, numFinishedEvents: payload } })
         }
 
         case INCREMENT_EVENT_FINISH: {
-            return _.assign(...state, { events: { ...state.events, animationVal: payload } })
+            return _.assign(...state, {
+                projects: state.projects.map((project, i) =>
+                    i === payload.index
+                        ? {...project, animationVal: payload.animationVal }
+                        : project)
+            })
         }
 
         default: return state;

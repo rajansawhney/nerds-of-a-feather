@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import _ from 'lodash';
 import moment from 'moment';
+import { Link } from 'react-router-dom';
+
+import { setEventsFinished, incrementEventsFinished } from '../state/actions/index';
 
 import ProjectCard from './ProjectCard';
 
@@ -9,8 +13,28 @@ const mapStateToProps = (state) => ({
 });
 
 class Project extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            data: {}
+        }
+    }
     componentWillMount() {
-        console.log(this.match)
+        const numFinishedEvents = _.isUndefined(this.props.match)
+            ? this.props.numFinishedEvents
+            : _.find(this.props.projects, { id: this.props.match.params.id }).numFinishedEvents;
+        this.props.setEventsFinished(numFinishedEvents)
+    }
+
+    componentDidMount() {
+        const project = _.find(this.props.projects, { id: this.props.id || _.get(this.props, 'match.params.id', '') });
+        const projectIndex = _.findIndex(this.props.projects, project);
+        setInterval(
+            _.throttle(this.props.incrementEventsFinished, 10),
+            250,
+            projectIndex
+        );
     }
 
     render() {
@@ -19,13 +43,16 @@ class Project extends Component {
             title,
             startDate,
             description,
+            numFinishedEvents,
             totalEvents,
-            animationVal,
-        } = this.props.projects[0];
+            animationVal
+        } = this.props;
+
         return (
             <ProjectCard
+                key={this.props.key}
                 title={title}
-                startDate={`This project was started ${moment().diff(moment(startDate), 'days')} days ago`}
+                startDate={`This project was started ${moment(moment.unix(startDate)).fromNow()}`}
                 link={<Link className="btn btn-primary" to={`projects/${id}`}>More Details</Link>}
             >
                 <div className="row justify-content-end align-items-center">
@@ -35,7 +62,7 @@ class Project extends Component {
                             totalEvents={totalEvents}
                         />
                     </div>
-                    {eventsFinished && (
+                    {numFinishedEvents && (
                         <div className="col-1">
                             <p className="m-0">{animationVal}/{totalEvents}</p>
                         </div>
@@ -47,7 +74,7 @@ class Project extends Component {
     }
 }
 
-export default Project;
+export default connect(mapStateToProps, { setEventsFinished, incrementEventsFinished })(Project);
 
 const ProgressBar = props => (
     <div className="progress">
@@ -60,4 +87,4 @@ const ProgressBar = props => (
             aria-valuemax="100"
         />
     </div>
-)
+);
