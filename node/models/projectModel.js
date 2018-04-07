@@ -11,7 +11,6 @@ const ProjectSchema = new Schema({
     },
     startDate: {
         type : Date
-        
     },
     endDate: {
         type : Date
@@ -27,7 +26,13 @@ const ProjectSchema = new Schema({
     },
     status: {
         type: String,
-        enum : ['not_started', 'in_progress', 'completed']
+        enum : ['not_started', 'in_progress', 'completed'],
+        default: 'not_started'
+    },
+    viewabilty: {
+        type: String,
+        enum: ['public', 'private'],
+        default: 'public'
     },
     tags: {
         type: [String]
@@ -37,4 +42,4 @@ const ProjectSchema = new Schema({
     }
 });
 
-module.exports = mongoose.model('Project', ProjectSchema)
+module.exports = mongoose.model('ProjectModel', ProjectSchema)

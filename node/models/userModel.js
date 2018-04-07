@@ -15,16 +15,16 @@ const userSchema = new Schema({
     organization: {
         id:{
             type: ObjectId,
-            required: 'objectId of organation is required for a user'
         },
         name:{
             type: String
+        },
+        role:{
+            type: String,
+            enum : ['admin', 'not_admin'],
+            default : 'not_admin'
         }
-    },
-    loginPermission:{
-        type: Boolean,
-        default: false
     }
 });
 
-module.exports = mongoose.model('Project', PropjectSchema)
+module.exports = mongoose.model('UserModel', UserSchema)

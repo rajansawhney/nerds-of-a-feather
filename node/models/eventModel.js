@@ -24,9 +24,14 @@ const EventSchema = new Schema({
             type: String
         }
     },
+    viewabilty: {
+        type: String,
+        enum: ['public', 'private'],
+        default: 'public'
+    },
     tags: {
         type: [String]
     }
 });
 
-module.exports = mongoose.model('Event', EventSchema)
+module.exports = mongoose.model('EventModel', EventSchema)
