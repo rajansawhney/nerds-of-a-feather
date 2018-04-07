@@ -33,7 +33,7 @@ const initialState = {
         {
             id: 'abcd123',
             title: 'Winter Warmth Project',
-            startDate: '2018-04-01',
+            startDate: 1523732368,
             numFinishedEvents: 12,
             totalEvents: 30,
             description: "Keep our friends without addresses warm this winter!",
@@ -42,7 +42,7 @@ const initialState = {
         {
             id: 'efg456',
             title: 'Fall Food Initiative',
-            startDate: '2018-03-28',
+            startDate: 1523732368,
             numFinishedEvents: 4,
             totalEvents: 22,
             description: "Spread the love (and food) around town!",
