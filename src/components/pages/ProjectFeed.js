@@ -14,7 +14,6 @@ const dummyAPIData = {
             id: 'abcd123',
             title: 'Some Project Name',
             startDate: `${moment().diff(moment(1522924450), 'days')} days ago`,
-            link:  <Link className="btn btn-primary" to="/projects/abcd123"> More Details</Link>,
             numFinishedEvents: 12,
             totalEvents: 30,
             description: "Come out so this event, It's going to be the best!"
