@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 const ProjectModel = mongoose.model('ProjectModel')
 
 module.exports = () => {
-    createOrUpdate = (req,res) => {
+    createOrUpdate : (req,res) => {
         if(!req.params.project_id){
             ProjectModel.save(req.body)
                 .then(newProjectDoument => res.send(newProjectDocument))
