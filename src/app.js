@@ -14,7 +14,7 @@ class App extends Component {
         return (
             <div>
                 <Header />
-                <div>
+                <div className="mr-3 ml-3">
                     <Switch>
                         <Route path="/" exact component={ProjectFeed} />
                         <Route path="/events" component={EventFeed} />
