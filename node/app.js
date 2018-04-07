@@ -1,9 +1,28 @@
-const express = require('express');
+const express = require('express'),
+                app = express(),
+                port = process.env.PORT || 3000,
+                mongoose = require('mongoose'),
+                OrganizationModel = require('../models/organiztionModel'),
+                ProjectModel = require('../models/projectModel'),
+                EventModel = require('../models/eventModel'),
+                UserModel = require('../models/userModel');
 
-const app = express();
+// mongoose connection
+mongoose.Promise  = global.Promise;
 
-const port = 3000 || process.env.port;
+mongoose.connect('mongodb://localhost/ECANdb')
+    .then( () => {
+        console.log(`Connected to ECANdb`)
+    })
+    .catch( err => {
+        console.error(`Unable to connect to ECANdb. Check if MongoDB instance is running" +
+								"\nRun mongodb instance in another terminal using: mongod" +
+								"\n\nError:\n", err.stack`);
+    })
 
-app.get('/', (req, res, next) => res.send({ msg: 'Hello World'}));
 
-app.listen(port, () => console.log(`App Listening on port: ${port}`));
+// pass routes from here?
+const routes = require('../routes/organization');
+// const routes = require('../routes/project');
+// const routes = require('../routes/organization');
+                

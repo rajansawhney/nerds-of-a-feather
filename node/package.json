@@ -1,12 +1,12 @@
 {
-  "name": "egan-warming-service",
+"name": "ecan",
   "version": "1.0.0",
-  "description": "Service for EGAN Warming Challenge H4C 2018",
-  "main": "app.js",
-  "author": "CBT Development",
+  "description": "Front End for EGAN Warming Center H4C 2018",
+  "main": "index.js",
   "repository": "git@github.com:rajansawhney/nerds-of-a-feather.git",
+  "author": "CBT Development",
   "license": "MIT",
-  "private": false,
+  "private": null,
   "scripts": {
     "start": "node app.js"
   },

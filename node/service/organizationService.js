@@ -3,7 +3,7 @@ const mongoose = require('mongoose'),
 const RequestError = require('../lib/Errors');
 
 module.exports = function () {
-    getAll: function (req, res, next) {
+    getAll: (req, res, next) => {
         OrganizationModel.find()
         .then(organizationRecords => {
             res.status(200).send(organizationRecords);
@@ -12,9 +12,9 @@ module.exports = function () {
             console.log(error);
             res.status(error.status || 500).send(error);
         });
-    },
+    };
 
-    getByID: function (req, res, next) {
+    getByID: (req, res, next) => {
         OrganizationModel.findOne({ _id: ObjectId(req.params.organization_id) })
         .then(organizationRecord => {
             res.status(200).send(organizationRecord);
@@ -23,9 +23,9 @@ module.exports = function () {
             console.log(error);
             res.status(error.status || 500).send(error);
         });
-    },
+    };
 
-    createOrUpdate: function (req, res, next) {
+    createOrUpdate: (req, res, next) => {
         if (req.params.organization_id) {
             console.log(`Updating organization: ${req.params.organization_id}`);
 
@@ -63,9 +63,9 @@ module.exports = function () {
                 console.log(error);
                 res.status(error.status || 500).send(error);
             });
-    },
+    };
 
-    delete: function (req, res, next) {
+    deleteOrg: (req, res, next) => {
         OrganizationModel.delete({ _id: ObjectId(req.params.organization_id) })
             .then(deletionResult => {
                 return res.status(204).send(deletionResult);
@@ -74,5 +74,7 @@ module.exports = function () {
                 console.log(error);
                 return res.status(error.status || 500).send(error);
             });
-    }
+    };
+
+
 };
