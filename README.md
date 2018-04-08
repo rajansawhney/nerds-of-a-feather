@@ -1,11 +1,11 @@
-Nerds of a feather - code together
+_Nerds of a feather - code together_
 
-#Hack for a Cause 2018 - Egan Warming Center Challenge
+# Hack for a Cause 2018
+## Emerald Compassionate Action Network Challenge
 
 ---
 
-development:
+#### Development:
 
 * `npm run start` - start project locally
 * `npm run build` - generate build folder for compiled/minified project and assets
-

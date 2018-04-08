@@ -7,9 +7,9 @@ const RequestError = require('../lib/Errors');
 module.exports = {
     createOrUpdate: (req, res) => {
         if (!req.params.event_id) {
-            return EventModel.create(req.body)
+            return EventModel.create(req.body.event)
                 .then(newEventDocument => {
-                    return ProjectModel.findOneAndUpdate({ _id: req.body.project.id }, { $push: { events: newEventDocument._id } })
+                    return ProjectModel.findOneAndUpdate({ _id: req.body.projectID }, { $push: { events: newEventDocument._id } })
                         .then(projectDocument => {
                             res.status(200).send(newEventDocument);
                         });

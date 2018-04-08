@@ -9,6 +9,9 @@ const EventSchema = new Schema({
     description: {
         type: String
     },
+    location: {
+        type: String
+    },
     eventDate:{
         type: Date
     },
