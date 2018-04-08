@@ -14,7 +14,6 @@ import { getEventsForProject } from '../../state/actions/index.js'
 
 const mapStateToProps = (state) => ({
     events: get(state, 'events', {}),
-    posts: get(state, 'posts', {})
     // animationVal: _.get(state, 'events.animationVal', null),
     // numFinishedEvents: _.get(state, 'events.numFinishedEvents', null)
 });
@@ -23,7 +22,7 @@ class EventFeed extends Component {
     constructor (props) {
         super(props)
         this.state = {
-            filteredEvents: this.props.events
+            filteredEvents: props.events
         }
     }
 
@@ -38,8 +37,8 @@ class EventFeed extends Component {
             return eventDate.isSame(selectedDate, 'day');
         })
 
-        console.log('this.state.filteredEvents', this.state.filteredEvents)
-        console.log('tempFilteredEvents', tempFilteredEvents)
+        // console.log('this.state.filteredEvents', this.state.filteredEvents)
+        // console.log('tempFilteredEvents', tempFilteredEvents)
 
         // let isSame = false
         if (isEqual(this.state.filteredEvents, tempFilteredEvents)) {
@@ -55,8 +54,11 @@ class EventFeed extends Component {
     }
 
     render() {
-        console.log(this.state)
-        const calendar = document.getElementsByClassName('react-calendar')
+        // if (this.props.events.status === 200) {
+        console.log('this.props.events', this.props.events)
+        console.log('this.state.filteredEvents', this.state.filteredEvents)
+        // }
+        // const calendar = document.getElementsByClassName('react-calendar')
         // console.log('calendar', calendar)
         return(
             <div className="container">                    
@@ -77,7 +79,7 @@ class EventFeed extends Component {
                 </div>
                 <div className="row justify-content-center">
                     <div className="col-8">
-                        <EventsWidget events={this.state.filteredEvents} />                      
+                        <EventsWidget events={this.props.events} />                      
                     </div>                  
                     <div className="pull-right">
                         <Card>

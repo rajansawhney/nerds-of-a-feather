@@ -13,10 +13,7 @@ import Calendar from 'react-calendar';
 import { addEventToProject } from '../../state/actions/index.js'
 
 const mapStateToProps = (state) => ({
-  events: get(state, 'events', {}),
-  posts: get(state, 'posts', {})
-  // animationVal: _.get(state, 'events.animationVal', null),
-  // numFinishedEvents: _.get(state, 'events.numFinishedEvents', null)
+  events: get(state, 'events', {})
 });
 
 const submitEvent = () => {
@@ -32,7 +29,10 @@ class AddEvent extends Component {
               eventDate: null,
               description: '',
               location: '',
-              projectID: '5ac9877976448030b88ac636',
+              project: {
+                id: '5ac9877976448030b88ac636',
+                name: 'Winter Warmth Project'
+              },
               tags: '',
               organization: {
                 id: '5ac9877976448030b88ac636',
@@ -48,27 +48,10 @@ class AddEvent extends Component {
     }
 
     submitEvent() {
-      console.log('click')
-      // const event = {
-      //   name: 'event name',
-      //   eventDate: '2017-08-12T09:30:00',
-      //   description: 'event description',
-      //   location: 'University of Oregon',
-      //   projectID: '5ac9877976448030b88ac636',
-      //   tags: ['food', 'winter'],
-      //   private: false,
-      //   organization: {
-      //     id: '5ac9877976448030b88ac636',
-      //     name: 'FOOD for Lane County'
-      //   }
-      // }
-      // console.log('this.props', this.props)
       this.props.addEventToProject(JSON.stringify(this.state.newEvent))
     }
 
     handleFormInput(e) {
-      console.log(e.target.id)
-      console.log(e.target.value)
       const newState = cloneDeep(this.state.newEvent);
       switch(e.target.id) {
         case 'eventName':
@@ -87,8 +70,8 @@ class AddEvent extends Component {
           newState.location = e.target.value
           this.setState({newEvent: newState})
           break
-        // case 'eventProjectID':
-        //   this.setState({ newEvent: {...this.state.newEvent, projectID: e.target.value} })
+        // case 'eventProject':
+        //   this.setState({ newEvent: {...this.state.newEvent, project: e.target.value} })
         case 'eventTags':
           newState.tags = e.target.value
           this.setState({newEvent: newState})
@@ -100,18 +83,9 @@ class AddEvent extends Component {
       }
     }
 
-    handleNameChange(e) {
-      this.setState({
-        ...newEvent,
-        name: e.target.value
-      })
-    }
-
     renderForm() {
       return (
         <Card>
-          {/* <div className="card-header">{date}</div> */}
-          {/* <img className="card-img-top" src={eventImg1} alt="Card image cap" /> */}
           <div className="card-body">
             {/* <form> */}
               <div className="form-group">
@@ -131,8 +105,8 @@ class AddEvent extends Component {
                 <input type="text" className="form-control" id="eventLocation" onChange={(e) => this.handleFormInput(e)}/>
               </div>
               <div className="form-group">
-                <label for="eventProjectID">Project</label>
-                <select className="form-control" id="eventProjectID" onChange={(e) => this.handleFormInput(e)}>
+                <label for="eventProject">Project</label>
+                <select className="form-control" id="eventProject" onChange={(e) => this.handleFormInput(e)}>
                   <option>Select Project</option>
                   <option>Fall Food Initiative</option>
                   <option>Winter Warmth Project</option>
@@ -156,7 +130,6 @@ class AddEvent extends Component {
     }
 
     render() {
-      console.log(this.state)
       return(
           <div className="container">                    
               <div className="row justify-content-center">
