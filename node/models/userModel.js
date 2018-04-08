@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const userSchema = new Schema({
+const UserSchema = new Schema({
     name : {
         type: String,
         required: 'Kindly enter the project name'
@@ -14,7 +14,7 @@ const userSchema = new Schema({
     },
     organization: {
         id:{
-            type: ObjectId,
+            type: Schema.Types.ObjectId,
         },
         name:{
             type: String

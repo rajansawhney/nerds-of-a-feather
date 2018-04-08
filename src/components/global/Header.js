@@ -8,7 +8,6 @@ class Header extends Component {
         return (
             <header>
                 <div className="text-center m-auto">
-                    <img src={logo} alt="ECAN Logo"/>
                 </div>
                 <div className="m-auto text-center">
                     <Navbar />
