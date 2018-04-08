@@ -15,7 +15,7 @@ const EventSchema = new Schema({
     project: {
         id: Schema.Types.ObjectId
     },
-    owner: {
+    organization: {
         id:{
             type: Schema.Types.ObjectId,
             required: 'objectId of the organization (that owns the event) is needed'
