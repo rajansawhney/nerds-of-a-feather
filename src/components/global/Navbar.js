@@ -18,7 +18,7 @@ class Navbar extends Component {
                             <button type="button" class="btn btn-light mx-2 mt-5"><Link class="text-success" to="/profile">Profile</Link></button>
                         </div>
                   </div>
-                  <button type="button" class="btn btn-outline-success btn-lg float-right mt-5 mr-5"><Link class="text-success" to="/profile">Login</Link></button>
+                  <button type="button" class="btn btn-outline-success btn-lg float-right mt-5 mr-5"><Link class="text-success" to="/login">Login</Link></button>
            </nav>
             
         )
