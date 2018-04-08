@@ -17,7 +17,7 @@ const ProjectSchema = new Schema({
     },
     owner: {
         id:{
-            type: ObjectId,
+            type: Schema.Types.ObjectId,
             required: 'objectId of the organization is needed'
         },
         name:{

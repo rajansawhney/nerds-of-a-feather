@@ -13,11 +13,11 @@ const EventSchema = new Schema({
         type: Date
     },
     project: {
-        id: ObjectId
+        id: Schema.Types.ObjectId
     },
     owner: {
         id:{
-            type: ObjectId,
+            type: Schema.Types.ObjectId,
             required: 'objectId of the organization (that owns the event) is needed'
         },
         name:{

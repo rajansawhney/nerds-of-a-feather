@@ -1,10 +1,30 @@
 const mongoose = require('mongoose');
-const ProjectModel = mongoose.model('ProjectModel')
+const Schema = mongoose.Schema;
+const ProjectModel = mongoose.model('ProjectModel');
+const RequestError = require('../lib/Errors');
 
-module.exports = () => {
+module.exports = {
+    getAll: (req,res) => {
+        return ProjectModel.find()
+            .then(projectDocuments => res.status(200).send(projectDocuments))
+            .catch(error => {
+                console.log(error);
+                res.status(error.status || 500).send(error);
+            })
+    },
+
+    getByID: (req,res) => {
+        return ProjectModel.findOne({ _id: req.params.project_id})
+        .then(projectDocument => res.status(200).send(projectDocument))
+        .catch(error => {
+            console.log(error);
+            res.status(error.status || 500).send(error);
+        })
+    },
+
     createOrUpdate : (req,res) => {
         if(!req.params.project_id){
-            ProjectModel.save(req.body)
+            return ProjectModel.create(req.body)
                 .then(newProjectDocument => res.status(200).send(newProjectDocument))
                 .catch(error => {
                     console.log(error);
@@ -12,10 +32,10 @@ module.exports = () => {
                 });
         }
         else {
-            ProjectModel.findOne({_id: req.params.project_id})
+            return ProjectModel.findOne({_id: req.params.project_id})
                 .then(foundProjectDocument => {
                     if(foundProjectDocument == null){
-                        res.status(401).send(err)
+                        throw new RequestError(`Project ${req.params.project_id} not found`, 'NOT_FOUND');
                     }
                     const updateProjectDocument = foundProjectDocument;
                     _.forEach(req.body, (value, key) => {
@@ -23,7 +43,7 @@ module.exports = () => {
                     });
 
                         updateProjectDocument[key] = value;
-                        return ProjectModel.update({ _id: ObjectId(req.params.project_id) }, updatedRecord)
+                        return ProjectModel.update({ _id: req.params.project_id }, updatedRecord)
                         .then(result => {
                             res.status(200).send(result);
                         })
@@ -33,32 +53,14 @@ module.exports = () => {
                     res.status(error.status || 500).send(error);
                 });
         }
-    };
-
-    getAll: (req,res) => {
-        ProjectModel.find()
-            .then(projectDocuments => res.status(200).send(projectDocuments))
-            .catch(error => {
-                console.log(error);
-                res.status(error.status || 500).send(error);
-            })
-    };
-
-    getByID: (req,res) => {
-        ProjectModel.findOne({ _id: ObjectId(req.params.project_id) })
-        .then(projectDocument => res.status(200).send(projectDocument))
-        .catch(error => {
-            console.log(error);
-            res.status(error.status || 500).send(error);
-        })
-    };
+    },
 
     deleteProject: (req, res, next) => {
-        ProjectModel.remove({ _id: ObjectId(req.params.project_id) })
+        return ProjectModel.remove({ _id: req.params.project_id })
             .then(res.status(204).send({'msg': 'deleted'}))
             .catch(error => {
                 console.log(error);
                 return res.status(error.status || 500).send(error);
             });
-    };
+    }
 }
