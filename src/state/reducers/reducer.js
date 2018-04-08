@@ -76,7 +76,7 @@ const reducer = (state = initialState, action) => {
         }
 
         case GET_EVENTS_RESOLVED: {
-            return _.assign(...state, { posts: payload })
+            return _.assign(...state, { events: [ ...state.events, payload ] })
         }
 
         default: return state;

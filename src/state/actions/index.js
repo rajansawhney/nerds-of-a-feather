@@ -37,12 +37,14 @@ export const incrementEventsFinished = () => {
 };
 
 export const addEventToProject = (event) => {
+    console.log('event', event)
     return (dispatch, getState) => {
         axios({
             method: 'post',
-            url: 'https://reqres.in/api/users',
-            data: {
-              event
+            url: 'http://localhost:3000/event',
+            data: event,
+            headers: {
+                'Content-Type': 'application/json'        
             }
           })
         .then(result => {
@@ -55,7 +57,7 @@ export const addEventToProject = (event) => {
 
 export const getEventsForProject = () => {
     return (dispatch, getState) => {
-        axios.get('https://reqres.in/api/users')
+        axios.get('http://localhost:3000/events')
         .then(result => dispatch({ type: GET_EVENTS_RESOLVED, payload: result }))
         .catch(err => dispatch({ type: GET_EVENTS_REJECTED, error: err }));
     }

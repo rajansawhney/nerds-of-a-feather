@@ -47,11 +47,20 @@ class AddEvent extends Component {
     submitEvent() {
       console.log('click')
       const event = {
-        "name": "morpheus",
-        "job": "leader"
-    }
+        'name': 'event name',
+        'eventDate': '2017-08-12T09:30:00',
+        'description': 'event description',
+        'location': 'University of Oregon',
+        'projectID': '1234',
+        'tags': ['food', 'winter'],
+        'private': false,
+        'organization': {
+          'id': '5ac9877976448030b88ac636',
+          'name': 'FOOD for Lane County'
+        }
+      }
       // console.log('this.props', this.props)
-      this.props.addEventToProject(event)
+      this.props.addEventToProject(JSON.stringify(event))
     }
 
     renderForm() {
