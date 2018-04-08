@@ -7,7 +7,7 @@ const EventModel = mongoose.model('EventModel');
 const RequestError = require('../lib/Errors');
 
 module.exports = {
-    getAll: (req,res) => {
+    getAll: (req, res) => {
         return ProjectModel.find().lean()
             .then(projectDocuments => {
                 return EventModel.find().then(eventDocuments => [projectDocuments, eventDocuments]);
@@ -43,13 +43,13 @@ module.exports = {
             })
     },
 
-    getByID: (req,res) => {
-        return ProjectModel.findOne({ _id: req.params.project_id})
-        .then(projectDocument => res.status(200).send(projectDocument))
-        .catch(error => {
-            console.log(error);
-            res.status(error.status || 500).send(error);
-        })
+    getByID: (req, res) => {
+        return ProjectModel.findOne({ _id: req.params.project_id })
+            .then(projectDocument => res.status(200).send(projectDocument))
+            .catch(error => {
+                console.log(error);
+                res.status(error.status || 500).send(error);
+            })
     },
 
     getProjectsByOrganization: (req, res) => {
@@ -61,8 +61,8 @@ module.exports = {
             });
     },
 
-    createOrUpdate : (req,res) => {
-        if(!req.params.project_id){
+    createOrUpdate: (req, res) => {
+        if (!req.params.project_id) {
             return ProjectModel.create(req.body)
                 .then(newProjectDocument => res.status(200).send(newProjectDocument))
                 .catch(error => {
@@ -71,9 +71,9 @@ module.exports = {
                 });
         }
         else {
-            return ProjectModel.findOne({_id: req.params.project_id})
+            return ProjectModel.findOne({ _id: req.params.project_id })
                 .then(foundProjectDocument => {
-                    if(foundProjectDocument == null){
+                    if (foundProjectDocument == null) {
                         throw new RequestError(`Project ${req.params.project_id} not found`, 'NOT_FOUND');
                     }
                     const updateProjectDocument = foundProjectDocument;
@@ -81,8 +81,8 @@ module.exports = {
                         updateProjectDocument[key] = value;
                     });
 
-                        updateProjectDocument[key] = value;
-                        return ProjectModel.update({ _id: req.params.project_id }, updatedRecord)
+                    updateProjectDocument[key] = value;
+                    return ProjectModel.update({ _id: req.params.project_id }, updatedRecord)
                         .then(result => {
                             res.status(200).send(result);
                         })
@@ -96,7 +96,32 @@ module.exports = {
 
     deleteProject: (req, res, next) => {
         return ProjectModel.remove({ _id: req.params.project_id })
-            .then(res.status(204).send({'msg': 'deleted'}))
+            .then(res.status(204).send({ 'msg': 'deleted' }))
+            .catch(error => {
+                console.log(error);
+                return res.status(error.status || 500).send(error);
+            });
+    },
+
+    // getEventsForProject: (req, res, next) => {
+    //     return ProjectModel.find({ _id: req.params.project_id })
+    //     .then(projectDocument => {
+    //         console.log('projectDocument', projectDocument[0].events);
+    //         return projectDocument[0].events.map(event_id => {
+    //             return EventModel.findById(event_id)
+    //                 .then(eventDocument => {
+    //                     console.log('eventDocument:\n', eventDocument);
+    //                     return eventDocument
+    //                 })
+    //         })
+    //     })
+    //     .then(console.log)
+    // // .then(mappedEvent => console.log('mapped events:\n',mappedEvent))
+    // }
+
+    getEventsForProject: (req, res, next) => {
+        return EventModel.find({ projectID: req.params.project_id })
+            .then(eventDocuments => {res.status(200).send(eventDocuments)})
             .catch(error => {
                 console.log(error);
                 return res.status(error.status || 500).send(error);

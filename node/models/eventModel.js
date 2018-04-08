@@ -16,7 +16,8 @@ const EventSchema = new Schema({
         type: Date
     },
     projectID: {
-        type: Schema.Types.ObjectId
+        type: Schema.Types.ObjectId,
+        required: 'Kindly enter the projectID'
     },
     organization: {
         id:{
