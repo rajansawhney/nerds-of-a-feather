@@ -15,9 +15,14 @@ const EventSchema = new Schema({
     eventDate:{
         type: Date
     },
-    projectID: {
-        type: Schema.Types.ObjectId,
-        required: 'Kindly enter the projectID'
+    project: {
+        id:{
+            type: Schema.Types.ObjectId,
+            required: 'Kindly enter the project.id'
+        },
+        name:{
+            type: String
+        }
     },
     organization: {
         id:{

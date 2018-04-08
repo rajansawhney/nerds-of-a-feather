@@ -9,7 +9,7 @@ module.exports = {
         if (!req.params.event_id) {
             return EventModel.create(req.body)
                 .then(newEventDocument => {
-                    return ProjectModel.findOneAndUpdate({ _id: req.body.projectID }, { $push: { events: newEventDocument._rsid } })
+                    return ProjectModel.findOneAndUpdate({ _id: req.body.project_id }, { $push: { events: newEventDocument._id } })
                         .then(projectDocument => {
                             res.status(200).send(newEventDocument);
                         });

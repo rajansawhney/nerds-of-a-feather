@@ -26,7 +26,7 @@ module.exports = {
                 const now = moment();
                 _.forEach(eventDocuments, eventDocument => {
                     if (now > eventDocument.eventDate) {
-                        finishedEventsByProject[eventDocument.projectID] += 1;
+                        finishedEventsByProject[eventDocument. project.id] += 1;
                     }
                 });
 
@@ -120,7 +120,7 @@ module.exports = {
     // }
 
     getEventsForProject: (req, res, next) => {
-        return EventModel.find({ projectID: req.params.project_id })
+        return EventModel.find({ 'project.id' : req.params.project_id })
             .then(eventDocuments => {res.status(200).send(eventDocuments)})
             .catch(error => {
                 console.log(error);
