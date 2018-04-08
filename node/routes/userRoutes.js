@@ -3,9 +3,6 @@ const {getAll, getByID, createOrUpdate, deleteUser} = require('../services/userS
 
 module.exports = function (app) {
 
-    console.log('GET_ORGANIZATIONS',routes.GET_USERS);
-    console.log('getAll',getAll);
-
     app.get(routes.GET_USERS, getAll);
 
     app.get(routes.GET_USER_BY_ID, getByID);

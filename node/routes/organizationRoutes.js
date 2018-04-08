@@ -8,9 +8,6 @@ const sendPromise = (req, res, promise) => {
 }
 
 module.exports = (app) => {
-
-    console.log('GET_ORGANIZATIONS',routes.GET_ORGANIZATIONS);
-    console.log('getAll',getAll);
     
     app.get(routes.GET_ORGANIZATIONS, getAll);
 
