@@ -71,17 +71,17 @@ export const addOrganizationForUser = () => {
     }
 }
 
-export const loginUser = (userName, password) => {
+export const loginUser = (username, password) => {
     return (dispatch, getState) => {
         axios({
             method: 'post',
-            url: 'https://jsonplaceholder.typicode.com/posts/',
+            url: 'http://localhost:3000/login',
             data: {
-              userName: userName,
+              username: username,
               password: password
             }
           })
-        .then(result => dispatch({ type: LOGIN_USER_RESOLVED, payload: result }))
+        .then(result => dispatch({ type: LOGIN_USER_RESOLVED, payload: result.data }))
         .catch(err => dispatch({ type: LOGIN_USER_REJECTED, error: err }));
     }
 }
