@@ -12,8 +12,8 @@ const EventSchema = new Schema({
     eventDate:{
         type: Date
     },
-    project: {
-        id: Schema.Types.ObjectId
+    projectID: {
+        type: Schema.Types.ObjectId
     },
     organization: {
         id:{

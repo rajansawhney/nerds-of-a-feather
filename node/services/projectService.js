@@ -26,7 +26,7 @@ module.exports = {
                 const now = moment();
                 _.forEach(eventDocuments, eventDocument => {
                     if (now > eventDocument.eventDate) {
-                        finishedEventsByProject[eventDocument.project.id] += 1;
+                        finishedEventsByProject[eventDocument.projectID] += 1;
                     }
                 });
 

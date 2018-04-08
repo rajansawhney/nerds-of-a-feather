@@ -43,6 +43,8 @@ const endpoints = {
 
     GET_USER_BY_ID: '/user/:user_id',
 
+    LOGIN: '/login',
+
     POST_USER: '/user/:user_id?',
 
     DELETE_USER: '/user/:user_id'

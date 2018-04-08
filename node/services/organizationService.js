@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
+const _ = require('lodash');
 const OrganizationModel = mongoose.model('OrganizationModel');
+const UserModel = mongoose.model('UserModel');
 const RequestError = require('../lib/Errors');
 
 const { ObjectId } = mongoose;
@@ -29,8 +31,17 @@ module.exports = {
 
     createOrUpdate: (req, res, next) => {
         if (!req.params.organization_id) {
-            return OrganizationModel.save(req.body)
-                .then(savedRecord => res.status(201).send(savedRecord))
+            const newOrganization = _.omitBy(req.body, function (key, value) {
+                return key === 'userId';
+            });
+
+            return OrganizationModel.create(newOrganization)
+                .then(savedRecord => {
+                    return UserModel.findOneAndUpdate({ _id: req.body.userId }, { $set: { 'organization.id': savedRecord._id, 'organization.name': savedRecord.name, 'organization.role': 'admin' }})
+                        .then(userRecord => {
+                            res.status(201).send(savedRecord);
+                        });
+                })
                 .catch(error => {
                     console.log(error);
                     res.status(error.status || 500).send(error);
