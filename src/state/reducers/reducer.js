@@ -11,11 +11,14 @@ import {
     ADD_ORG_RESOLVED,
     ADD_ORG_REJECTED,
     LOGIN_USER_RESOLVED,
-    LOGIN_USER_REJECTED
+    LOGIN_USER_REJECTED,
+    GET_PROJECTS_FOR_ORGANIZATION_RESOLVED,
+    GET_PROJECTS_FOR_ORGANIZATION_REJECTED
 } from '../types';
 
 const initialState = {
     user: {},
+    organizationProjects: [],
     events: [
         { 
             id: 'tuv789',
@@ -85,7 +88,16 @@ const reducer = (state = initialState, action) => {
         }
 
         case LOGIN_USER_REJECTED: {
-            return _.assign(...state, { events: [ ...state.events, payload ] })
+            return _.assign(...state, { user: [ ...state.user, {} ] })
+        }
+
+        case GET_PROJECTS_FOR_ORGANIZATION_REJECTED: {
+            return _.assign(...state, { organizationProjects: [] })
+        }
+
+        case GET_PROJECTS_FOR_ORGANIZATION_RESOLVED: {
+            console.log('PAYLOAD', payload);
+            return _.assign(...state, { organizationProjects: payload })
         }
 
         default: return state;

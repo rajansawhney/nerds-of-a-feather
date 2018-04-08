@@ -10,11 +10,12 @@ import eventImg1 from '../../static/imgs/stock-event-1.jpg';
 import Card from '../Card';
 import Calendar from 'react-calendar';
 
-import { getEventsForProject } from '../../state/actions/index.js'
+import { getEventsForProject, getProjectsByOrganizationById } from '../../state/actions/index.js'
 
 const mapStateToProps = (state) => ({
     events: get(state, 'events', {}),
-    posts: get(state, 'posts', {})
+    posts: get(state, 'posts', {}),
+    user: get(state, 'user', {})
     // animationVal: _.get(state, 'events.animationVal', null),
     // numFinishedEvents: _.get(state, 'events.numFinishedEvents', null)
 });
@@ -43,6 +44,11 @@ class EventFeed extends Component {
         : this.setState({ filteredEvents: [] }) 
     }
 
+    getProjectsByOrganization() {
+        let organization_id = this.props.user[0].organization.id || '000000000000';
+        this.props.getProjectsByOrganizationById(organization_id);
+    }
+
     render() {
         console.log(this.props)
         return(
@@ -56,7 +62,8 @@ class EventFeed extends Component {
                             <button type="button" 
                                     className="btn btn-success float-right" 
                                     data-toggle="modal" 
-                                    data-target="#exampleModal">
+                                    data-target="#exampleModal"
+                                    onClick={this.getProjectsByOrganization.bind(this)}>
                                     Add New Event
                             </button>
                         </Link>
@@ -80,4 +87,4 @@ class EventFeed extends Component {
     }
 }
 
-export default connect(mapStateToProps, { getEventsForProject })(EventFeed);
+export default connect(mapStateToProps, { getEventsForProject, getProjectsByOrganizationById })(EventFeed);

@@ -11,7 +11,9 @@ import {
     ADD_ORG_RESOLVED,
     ADD_ORG_REJECTED,
     LOGIN_USER_RESOLVED,
-    LOGIN_USER_REJECTED
+    LOGIN_USER_REJECTED,
+    GET_PROJECTS_FOR_ORGANIZATION_RESOLVED,
+    GET_PROJECTS_FOR_ORGANIZATION_REJECTED
 } from '../types';
 
 export const setEventsFinished = (val) => {
@@ -62,6 +64,17 @@ export const getEventsForProject = () => {
         .catch(err => dispatch({ type: GET_EVENTS_REJECTED, error: err }));
     }
 };
+
+export const getProjectsByOrganizationById = (organization_id) => {
+    return (dispatch, getState) => {
+        axios.get(`http://localhost:3000/projects/by/organization/${organization_id}`)
+        .then(result => {
+            console.log('RESULT', result);
+            dispatch({ type: GET_PROJECTS_FOR_ORGANIZATION_RESOLVED, payload: result.data });
+        })
+        .catch(err => dispatch({ type: GET_PROJECTS_FOR_ORGANIZATION_REJECTED, error: err }));
+    }
+}
 
 export const addOrganizationForUser = () => {
     return (dispatch, getState) => {

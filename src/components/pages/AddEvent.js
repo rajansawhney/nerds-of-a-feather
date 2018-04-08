@@ -14,7 +14,8 @@ import { addEventToProject } from '../../state/actions/index.js'
 
 const mapStateToProps = (state) => ({
   events: get(state, 'events', {}),
-  posts: get(state, 'posts', {})
+  posts: get(state, 'posts', {}),
+  organizationProjects: get(state, 'organizationProjects', [])
   // animationVal: _.get(state, 'events.animationVal', null),
   // numFinishedEvents: _.get(state, 'events.numFinishedEvents', null)
 });
