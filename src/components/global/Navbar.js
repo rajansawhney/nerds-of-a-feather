@@ -1,17 +1,26 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import logo from '../../static/imgs/ecan_logo_trans.png';
 
 import './styles.scss';
 
 class Navbar extends Component {
     render() {
         return (
-            <nav>
-                <Link to="/">Projects</Link>
-                <Link to="/events">Events</Link>
-                <Link to="/explore">Explore</Link>
-                <Link to="/profile" >Profile</Link>
-            </nav>
+
+            <nav class="navbar navbar-expand-lg navbar-white border-bottom mb-3">
+                  <div class="navbar-brand"><img src={logo} alt="ECAN Logo" width="150" height="150" className="d-inline-block float-left"/></div>
+                  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                        <div class="navbar-nav">
+                            <button type="button" class="btn btn-light mx-2 mt-5"><Link class="text-success" to="/">Projects</Link></button>
+                            <button type="button" class="btn btn-light mx-2 mt-5"><Link class="text-success" to="/events">Events</Link></button>
+                            <button type="button" class="btn btn-light mx-2 mt-5"><Link class="text-success" to="/explore">Explore</Link></button>
+                            <button type="button" class="btn btn-light mx-2 mt-5"><Link class="text-success" to="/profile">Profile</Link></button>
+                        </div>
+                  </div>
+                  <button type="button" class="btn btn-outline-success btn-lg float-right mt-5 mr-5">Login</button>
+           </nav>
+            
         )
     }
 }
