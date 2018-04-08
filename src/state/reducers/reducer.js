@@ -15,6 +15,7 @@ import {
 } from '../types';
 
 const initialState = {
+    user: {},
     events: [
         { 
             id: 'tuv789',
@@ -76,6 +77,14 @@ const reducer = (state = initialState, action) => {
         }
 
         case GET_EVENTS_RESOLVED: {
+            return _.assign(...state, { events: [ ...state.events, payload ] })
+        }
+
+        case LOGIN_USER_RESOLVED: {
+            return _.assign(...state, { user: [ ...state.user, payload ] })
+        }
+
+        case LOGIN_USER_REJECTED: {
             return _.assign(...state, { events: [ ...state.events, payload ] })
         }
 

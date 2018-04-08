@@ -78,7 +78,7 @@ module.exports = {
     },
 
     deleteUser: (req, res, next) => {
-        UserModel.delete({ _id:req.params.user_id})
+        UserModel.remove({ _id:req.params.user_id})
             .then(res.status(204).send({'msg': 'deleted'}))
             .catch(error => {
                 console.log(error);

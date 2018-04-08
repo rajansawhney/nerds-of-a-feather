@@ -12,7 +12,8 @@ const UserModel = require('./models/userModel');
 mongoose.Promise  = global.Promise;
 let ecanDB = null;
 
-mongoose.connect('mongodb://ec2-35-168-22-26.compute-1.amazonaws.com/ECANdb')
+//mongoose.connect('mongodb://ec2-35-168-22-26.compute-1.amazonaws.com/ECANdb')
+mongoose.connect('mongodb://localhost/ECANdb')
     .then( client => {
         // console.log(JSON.stringify(client,null,2))
         console.log(`Connected to ECANdb`)
@@ -31,7 +32,7 @@ app.all('*', function(req, res, next) {
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
     res.header("Access-Control-Allow-Headers", "Content-Type");
     if(req.method === 'OPTIONS') {
-        res.send(200)
+        res.sendStatus(200)
     } else {
         next();
     }

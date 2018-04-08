@@ -9,6 +9,7 @@ import ProjectFeed from './components/pages/ProjectFeed';
 import EventFeed from './components/pages/EventFeed';
 import AddEvent from './components/pages/AddEvent';
 import Project from './components/Project';
+import LoginPage from './components/pages/LoginPage';
 
 class App extends Component {
     render() {
@@ -21,6 +22,7 @@ class App extends Component {
                         <Route path="/events" component={EventFeed} />
                         <Route path="/addevent" component={AddEvent} />
                         <Route path="/projects/:id" component={Project} />
+                        <Route path="/login" component={LoginPage} />
                     </Switch>
                 </div>
             </div>
