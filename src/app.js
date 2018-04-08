@@ -7,6 +7,7 @@ import Header from './components/global/Header';
 
 import ProjectFeed from './components/pages/ProjectFeed';
 import EventFeed from './components/pages/EventFeed';
+import AddEvent from './components/pages/AddEvent';
 import Project from './components/Project';
 
 class App extends Component {
@@ -18,6 +19,7 @@ class App extends Component {
                     <Switch>
                         <Route path="/" exact component={ProjectFeed} />
                         <Route path="/events" component={EventFeed} />
+                        <Route path="/addevent" component={AddEvent} />
                         <Route path="/projects/:id" component={Project} />
                     </Switch>
                 </div>
