@@ -15,7 +15,7 @@ const ProjectSchema = new Schema({
     endDate: {
         type : Date
     },
-    owner: {
+    organization: {
         id:{
             type: Schema.Types.ObjectId,
             required: 'objectId of the organization is needed'
@@ -29,10 +29,9 @@ const ProjectSchema = new Schema({
         enum : ['not_started', 'in_progress', 'completed'],
         default: 'not_started'
     },
-    viewabilty: {
-        type: String,
-        enum: ['public', 'private'],
-        default: 'public'
+    private: {
+        type: Boolean,
+        default: false
     },
     tags: {
         type: [String]

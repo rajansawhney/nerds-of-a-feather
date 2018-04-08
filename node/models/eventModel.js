@@ -24,10 +24,9 @@ const EventSchema = new Schema({
             type: String
         }
     },
-    viewabilty: {
-        type: String,
-        enum: ['public', 'private'],
-        default: 'public'
+    private: {
+        type: Boolean,
+        default: false
     },
     tags: {
         type: [String]

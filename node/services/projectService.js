@@ -22,6 +22,15 @@ module.exports = {
         })
     },
 
+    getProjectsByOrganization: (req, res) => {
+        return ProjectModel.find({ 'organization.id': req.params.organization_id })
+            .then(projectDocuments => res.status(200).send(projectDocuments))
+            .catch(error => {
+                console.log(error);
+                res.status(error.status || 500).send(error);
+            });
+    },
+
     createOrUpdate : (req,res) => {
         if(!req.params.project_id){
             return ProjectModel.create(req.body)
