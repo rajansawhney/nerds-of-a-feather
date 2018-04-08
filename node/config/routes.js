@@ -25,6 +25,7 @@ const endpoints = {
 
     DELETE_PROJECT: '/project/:project_id',
 
+    GET_EVENTS_FOR_PROJECTS: '/project/:project_id/events',
     /*
      * Event endpoints
      */
