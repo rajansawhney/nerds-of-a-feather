@@ -8,7 +8,7 @@ class Navbar extends Component {
     render() {
         return (
 
-            <nav class="navbar navbar-expand-lg navbar-white border-bottom mb-3">
+            <nav class="navbar navbar-expand-lg navbar-white border-bottom mb-4">
                   <div class="navbar-brand"><img src={logo} alt="ECAN Logo" width="150" height="150" className="d-inline-block float-left"/></div>
                   <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                         <div class="navbar-nav">

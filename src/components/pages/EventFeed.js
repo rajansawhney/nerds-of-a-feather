@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { get, filter } from 'lodash';
+import { get, filter, isEqual } from 'lodash';
 import moment from 'moment';
 
 import EventsWidget from '../EventsWidget'
@@ -38,13 +38,26 @@ class EventFeed extends Component {
             return eventDate.isSame(selectedDate, 'day');
         })
 
-        tempFilteredEvents.length
-        ? this.setState({ filteredEvents: tempFilteredEvents })
-        : this.setState({ filteredEvents: [] }) 
+        console.log('this.state.filteredEvents', this.state.filteredEvents)
+        console.log('tempFilteredEvents', tempFilteredEvents)
+
+        // let isSame = false
+        if (isEqual(this.state.filteredEvents, tempFilteredEvents)) {
+            // isSame = true
+            this.setState({
+                filteredEvents: this.props.events
+            })
+        } else {
+            tempFilteredEvents.length
+            ? this.setState({ filteredEvents: tempFilteredEvents })
+            : this.setState({ filteredEvents: [] }) 
+        }
     }
 
     render() {
-        console.log(this.props)
+        console.log(this.state)
+        const calendar = document.getElementsByClassName('react-calendar')
+        // console.log('calendar', calendar)
         return(
             <div className="container">                    
                <div className="row justify-content-center">
@@ -68,7 +81,8 @@ class EventFeed extends Component {
                     </div>                  
                     <div className="pull-right">
                         <Card>
-                            <Calendar 
+                            <Calendar
+                                id="calendar" 
                                 value={new Date()}
                                 onChange={(value) => this.onDateChange(value)}
                             />
