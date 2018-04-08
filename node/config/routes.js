@@ -1,7 +1,7 @@
 const _ = require('lodash');
 const api = {
-    prefix: 'http://soar.ecan.com/soar',
-    version: 'v1'
+    prefix: 'http://localhost:3000',
+    // version: 'v1'
 };
 
 const endpoints = {
@@ -51,5 +51,5 @@ const endpoints = {
 };
 
 module.exports = _.mapValues(endpoints, 
-    endpointURL => `${api.prefix}/${api.version}${endpointURL}`
+    endpointURL => `${endpointURL}`
 );

@@ -7,18 +7,16 @@ import Header from './components/global/Header';
 
 import ProjectFeed from './components/pages/ProjectFeed';
 import EventFeed from './components/pages/EventFeed';
-import Project from './components/Project';
 
 class App extends Component {
     render() {
         return (
             <div>
                 <Header />
-                <div>
+                <div className="mr-3 ml-3">
                     <Switch>
                         <Route path="/" exact component={ProjectFeed} />
                         <Route path="/events" component={EventFeed} />
-                        <Route path="/projects/:id" component={Project} />
                     </Switch>
                 </div>
             </div>

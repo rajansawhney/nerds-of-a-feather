@@ -1,5 +1,5 @@
 {
-"name": "ecan",
+  "name": "ecan",
   "version": "1.0.0",
   "description": "Front End for EGAN Warming Center H4C 2018",
   "main": "index.js",
@@ -11,6 +11,9 @@
     "start": "node app.js"
   },
   "dependencies": {
-    "lodash": "^4.17.5"
+    "express": "^4.16.3",
+    "lodash": "^4.17.5",
+    "mongoose": "^5.0.13",
+    "nodemon": "^1.17.3"
   }
 }

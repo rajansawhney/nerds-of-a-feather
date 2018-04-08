@@ -1,12 +1,16 @@
 const routes = require('../config/routes.js');
-const user = require('../services/userService');
+const {getAll, getByID, createOrUpdate, deleteUser} = require('../services/userService');
 
-module.exports = function () {
-    app.get(routes.GET_USERS, user.getAll);
+module.exports = function (app) {
 
-    app.get(routes.GET_USER_BY_ID, user.getByID);
+    console.log('GET_ORGANIZATIONS',routes.GET_USERS);
+    console.log('getAll',getAll);
 
-    app.post(routes.POST_USER, user.createOrUpdate);
+    app.get(routes.GET_USERS, getAll);
 
-    app.delete(routes.DELETE_USER, user.deleteUser);
+    app.get(routes.GET_USER_BY_ID, getByID);
+
+    app.post(routes.POST_USER, createOrUpdate);
+
+    app.delete(routes.DELETE_USER, deleteUser);
 };

@@ -1,12 +1,25 @@
+const {getAll, getByID, createOrUpdate, deleteOrganization} = require('../services/organizationService');
 const routes = require('../config/routes.js');
-const organization = require('../services/organizationService');
 
-module.exports = function () {
-    app.get(routes.GET_ORGANIZATIONS, organization.getAll);
+const sendPromise = (req, res, promise) => {
+    promise
+    .then(data => res.status(200).send(data))
+    .catch(err => res.status(err.status || 500).send(err));
+}
 
-    app.get(routes.GET_ORGANIZATION_BY_ID, organization.getByID);
+module.exports = (app) => {
 
-    app.post(routes.POST_ORGANIZATION, organization.createOrUpdate);
+    console.log('GET_ORGANIZATIONS',routes.GET_ORGANIZATIONS);
+    console.log('getAll',getAll);
+    
+    app.get(routes.GET_ORGANIZATIONS, getAll);
 
-    app.delete(routes.DELETE_ORGANIZATION, organization.deleteOrganization);
+    app.get(routes.GET_ORGANIZATION_BY_ID, getByID);
+
+    app.post(routes.POST_ORGANIZATION, createOrUpdate);
+
+    app.delete(
+        routes.DELETE_ORGANIZATION,
+        (req, res) => sendPromise(req, res, deleteOrganization(req.params.organization_id))
+    );
 };

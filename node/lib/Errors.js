@@ -14,7 +14,7 @@ function RequestError (message, code, uri, status) {
 
     Error.call(this);
     Error.captureStackTrace(this, this.constructor);
-    super(message);
+    //super(message);
     this.name = this.constructor.name;
     this.code = code || 'SERVER_ERROR';
     this.uri = uri;
