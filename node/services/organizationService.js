@@ -6,7 +6,6 @@ const { ObjectId } = mongoose;
 
 module.exports = {
     getAll: (req, res, next) => {
-        console.log('in  here')
         return OrganizationModel.find()
             .then(organizationRecords => {
                 res.status(200).send(organizationRecords);

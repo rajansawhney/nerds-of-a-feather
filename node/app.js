@@ -12,7 +12,6 @@ const UserModel = require('./models/userModel');
 mongoose.Promise  = global.Promise;
 let ecanDB = null;
 
-// mongoose.connect('mongodb://localhost')
 mongoose.connect('mongodb://ec2-35-168-22-26.compute-1.amazonaws.com/ECANdb')
     .then( client => {
         // console.log(JSON.stringify(client,null,2))
@@ -27,28 +26,22 @@ mongoose.connect('mongodb://ec2-35-168-22-26.compute-1.amazonaws.com/ECANdb')
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-// pass routes from here?
+
 const organizationRoutes = require('./routes/organizationRoutes');
 const projectRoutes = require('./routes/projectRoutes');
 const eventRoutes = require('./routes/eventRoutes');
 const userRoutes = require('./routes/userRoutes');
 organizationRoutes(app);
 projectRoutes(app);
-// eventRoutes(app);
-// userRoutes(app);
-// const routes = require('../routes/project');
-// const routes = require('../routes/organization');
-
+eventRoutes(app);
+userRoutes(app);
 
 app.listen(port);
-// console.log('Routes:',routes)
 console.log(`ECAN server started on: ` + port)
 
-// app.use('*', routes);
 
 app.use(function(req, res, next) {
     res.status(404).send({url: req.originalUrl + ' not found'})
-    // next()
 });
 
-// module.exports = app; //for testing
+module.exports = app; //for testing
