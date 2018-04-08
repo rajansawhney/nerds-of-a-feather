@@ -26,6 +26,17 @@ mongoose.connect('mongodb://ec2-35-168-22-26.compute-1.amazonaws.com/ECANdb')
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+app.all('*', function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    res.header("Access-Control-Allow-Headers", "Content-Type");
+    if(req.method === 'OPTIONS') {
+        res.send(200)
+    } else {
+        next();
+    }
+});
+
 
 const organizationRoutes = require('./routes/organizationRoutes');
 const projectRoutes = require('./routes/projectRoutes');

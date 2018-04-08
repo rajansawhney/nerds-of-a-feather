@@ -5,6 +5,7 @@ const RequestError = require('../lib/Errors');
 
 module.exports = {
     createOrUpdate: (req, res) => {
+        console.log('req.body', req.body)
         if (!req.params.event_id) {
             return EventModel.create(req.body)
                 .then(newEventDocument => res.status(200).send(newEventDocument))
