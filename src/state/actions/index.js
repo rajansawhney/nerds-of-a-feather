@@ -23,15 +23,21 @@ export const setEventsFinished = (val) => {
     }
 };
 
-export const incrementEventsFinished = () => {
+export const incrementEventsFinished = (projectIndex) => {
     return (dispatch, getState) => {
-        const currentVal = _.get(getState(), 'events.animationVal', null);
-        const targetVal = _.get(getState(), 'events.numFinishedEvents', null);
+        const project = _.get(getState(), 'projects')[projectIndex];
+        const currentVal = _.get(project, `animationVal`, null);
+        const targetVal = _.get(project, 'numFinishedEvents', null);
         if (currentVal < targetVal) {
             dispatch({
                 type: INCREMENT_EVENT_FINISH,
-                payload: currentVal + 1
+                payload: {
+                    index: projectIndex,
+                    animationVal: currentVal + 1
+                }
             })
+        } else {
+            window.clearInterval(incrementEventsFinished)
         }
     }
 };
