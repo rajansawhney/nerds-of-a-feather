@@ -1,8 +1,4 @@
 const _ = require('lodash');
-const api = {
-    prefix: 'http://localhost:3000',
-    // version: 'v1'
-};
 
 const endpoints = {
     /*
@@ -22,6 +18,8 @@ const endpoints = {
     GET_PROJECTS: '/projects',
 
     GET_PROJECT_BY_ID: '/project/:project_id',
+
+    GET_PROJECTS_BY_ORGANIZATION: '/projects/by/organization/:organization_id',
 
     POST_PROJECT: '/project/:project_id?',
 
@@ -44,6 +42,8 @@ const endpoints = {
     GET_USERS: '/users',
 
     GET_USER_BY_ID: '/user/:user_id',
+
+    LOGIN: '/login',
 
     POST_USER: '/user/:user_id?',
 
