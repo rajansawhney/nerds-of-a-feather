@@ -1,12 +1,42 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const _ = require('lodash');
+const moment = require('moment');
 const ProjectModel = mongoose.model('ProjectModel');
+const EventModel = mongoose.model('EventModel');
 const RequestError = require('../lib/Errors');
 
 module.exports = {
     getAll: (req,res) => {
-        return ProjectModel.find()
-            .then(projectDocuments => res.status(200).send(projectDocuments))
+        return ProjectModel.find().lean()
+            .then(projectDocuments => {
+                return EventModel.find().then(eventDocuments => [projectDocuments, eventDocuments]);
+            })
+            .then(([projectDocuments, eventDocuments]) => {
+                const projectIds = _.flatMap(projectDocuments, projectDocument => {
+                    return projectDocument._id;
+                });
+
+                const finishedEventsByProject = {};
+
+                _.forEach(projectIds, projectId => {
+                    finishedEventsByProject[projectId] = 0;
+                });
+
+                const now = moment();
+                _.forEach(eventDocuments, eventDocument => {
+                    if (now > eventDocument.eventDate) {
+                        finishedEventsByProject[eventDocument.projectID] += 1;
+                    }
+                });
+
+                _.forEach(projectDocuments, project => {
+                    project.totalEvents = project.events.length;
+                    project.numFinishedEvents = finishedEventsByProject[project._id];
+                });
+
+                res.status(200).send(projectDocuments);
+            })
             .catch(error => {
                 console.log(error);
                 res.status(error.status || 500).send(error);
@@ -20,6 +50,15 @@ module.exports = {
             console.log(error);
             res.status(error.status || 500).send(error);
         })
+    },
+
+    getProjectsByOrganization: (req, res) => {
+        return ProjectModel.find({ 'organization.id': req.params.organization_id })
+            .then(projectDocuments => res.status(200).send(projectDocuments))
+            .catch(error => {
+                console.log(error);
+                res.status(error.status || 500).send(error);
+            });
     },
 
     createOrUpdate : (req,res) => {

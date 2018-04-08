@@ -9,11 +9,14 @@ const EventSchema = new Schema({
     description: {
         type: String
     },
+    location: {
+        type: String
+    },
     eventDate:{
         type: Date
     },
-    project: {
-        id: Schema.Types.ObjectId
+    projectID: {
+        type: Schema.Types.ObjectId
     },
     organization: {
         id:{
@@ -24,10 +27,9 @@ const EventSchema = new Schema({
             type: String
         }
     },
-    viewabilty: {
-        type: String,
-        enum: ['public', 'private'],
-        default: 'public'
+    private: {
+        type: Boolean,
+        default: false
     },
     tags: {
         type: [String]

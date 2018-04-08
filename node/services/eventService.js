@@ -1,14 +1,20 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const EventModel = mongoose.model('EventModel')
+const EventModel = mongoose.model('EventModel');
+const ProjectModel = mongoose.model('ProjectModel');
 const RequestError = require('../lib/Errors');
 
 module.exports = {
     createOrUpdate: (req, res) => {
         console.log('req.body', req.body)
         if (!req.params.event_id) {
-            return EventModel.create(req.body)
-                .then(newEventDocument => res.status(200).send(newEventDocument))
+            return EventModel.create(req.body.event)
+                .then(newEventDocument => {
+                    return ProjectModel.findOneAndUpdate({ _id: req.body.projectID }, { $push: { events: newEventDocument._id } })
+                        .then(projectDocument => {
+                            res.status(200).send(newEventDocument);
+                        });
+                })
                 .catch(error => {
                     console.log(error);
                     res.status(error.status || 500).send(error);
@@ -21,16 +27,14 @@ module.exports = {
                         throw new RequestError(`Event ${req.params.event_id} not found`, 'NOT_FOUND');
                     }
 
-                    const updateEventDocument = foundEventDocument;
+                    const newEventDocument = foundEventDocument;
                     _.forEach(req.body, (value, key) => {
-                        updateEventDocument[key] = value;
+                        newEventDocument[key] = value;
                     });
 
-                    updateEventDocument[key] = value;
-                    return EventModel.update({ _id: req.params.event_id }, updateEventDocument)
-                        .then(result => {
-                            res.status(200).send(result);
-                        });
+                    newEventDocument[key] = value;
+                    return EventModel.update({ _id: req.params.event_id }, newEventDocument)
+                        .then(updatedEventDocument => res.status(200).send(updatedEventDocument));
                 })
                 .catch(error => {
                     console.log(error);
@@ -59,7 +63,10 @@ module.exports = {
 
     deleteEvent: (req, res, next) => {
         return EventModel.remove({ _id: req.params.event_id })
-            .then(res.status(204).send({ 'msg': 'deleted' }))
+            .then(deletedRecord => {
+                return ProjectModel.findOneAndUpdate({ events: req.params.event_id }, { $pull: { events: req.params.event_id } })
+                    .then(projectDocument => res.status(204).send({ 'msg': 'deleted' }));
+            })
             .catch(error => {
                 console.log(error);
                 res.status(error.status || 500).send(error);

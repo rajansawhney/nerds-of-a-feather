@@ -7,6 +7,9 @@ function RequestError (message, code, uri, status) {
             case 'BAD_REQUEST':
                 status = 400;
                 break;
+            case 'ACCESS_DENIED':
+                status = 401;
+                break;
             default:
                 status = 500;
         }

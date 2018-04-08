@@ -4,9 +4,9 @@ const Schema = mongoose.Schema;
 const UserSchema = new Schema({
     name : {
         type: String,
-        required: 'Kindly enter the project name'
+        required: 'Kindly enter your name'
     },
-    userName: {
+    username: {
         type: String
     },
     password:{
